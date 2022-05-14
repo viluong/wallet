@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "0.0.0.0:5432:5432"
+    restart: always
+    env_file:
+      ./.env
+    volumes:
+      - ./.env:/wallet/usr/app/.env
+  backend:
+    image: wallet_backend
+    env_file:
+      ./.env
+    build: .
+    command: ["/usr/app/wallet/wait-for-it.sh", "db:5432", "-t", "5", "--", "python", "manage.py", "runserver", "0.0.0.0:8001"]
+    volumes:
+      - ./:/usr/app/wallet
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+  migration:
+    image: wallet_backend
+    env_file:
+      ./.env
+    command: ["/usr/app/wallet/wait-for-it.sh", "db:5432", "-t", "5", "--", "python", "manage.py", "migrate"]
+    volumes:
+      - ./:/usr/app/wallet
+    depends_on:
+      - db
+      - backend
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  worker:
+    image: wallet_backend
+    command:  bash -c "rm -f -- -celerybeat && celery -A myapp worker -l INFO"
+    env_file:
+      ./.env
+    volumes:
+      - ./:/usr/app/wallet
+    depends_on:
+      - backend

@@ -1,0 +1,8 @@
+
+.env
+
+.idea/
+
+wallet/__pycache__/
+
+*.pyc
