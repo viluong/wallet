@@ -1,6 +1,7 @@
 from django.http import Http404
 from rest_framework import status
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from wallet.models import Wallet
@@ -12,6 +13,7 @@ from wallet.utils import response_success, response_fail
 class InitAccountView(APIView):
 
     parser_classes = [FormParser, MultiPartParser, JSONParser]
+    permission_classes = [AllowAny]
 
     def post(self, request, format=None):
         serializer = CustomerSerializer(data=request.data)

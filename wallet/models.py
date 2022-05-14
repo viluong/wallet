@@ -44,7 +44,7 @@ class Wallet(BaseModel):
 class Transaction(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False)
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, related_name='wallet_transactions')
-    reference_id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    reference_id = models.UUIDField(primary_key=True, null=False, blank=False)
     type = models.CharField(choices=TRANSACTION_CHOICES, default='DEP', max_length=20)
     amount = models.FloatField(default=0)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,

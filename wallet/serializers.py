@@ -55,7 +55,7 @@ class EnableWalletSerializer(serializers.ModelSerializer):
             instance.status_updated_at = datetime.now()
             instance.save()
         else:
-            raise serializers.ValidationError("Already disabled")
+            raise serializers.ValidationError("Already enabled")
 
         return instance
 

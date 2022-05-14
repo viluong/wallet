@@ -13,7 +13,7 @@ Docker, Docker-compose
 
 
 ## Note:
-- The API domain isn't localhost, It is localhost:8001. Please run with http://localhost:8001/
+- The domain API is localhost:8001. Please set `mw_base_url` on Postman Environments File is http://localhost:8001/
 - If you want to run with http://localhost/. Please install nginx and setup `location` and `server_name` in config.
 #### Example:
 ```text

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_celery_results',
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'wallet.apps.WalletConfig',
     'exception.apps.ExceptionConfig',
@@ -84,8 +85,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('POSTGRES_DB', 'wallet'),
-        'USER': os.getenv('POSTGRES_USER', 'viluong'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'viluong'),
+        'USER': os.getenv('POSTGRES_USER', 'wallettest'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'wallettest'),
         'HOST': 'db',
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
@@ -131,7 +132,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',

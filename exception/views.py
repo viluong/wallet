@@ -1,6 +1,7 @@
 from django.utils import http
-from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from rest_framework.exceptions import ValidationError
 from rest_framework.views import exception_handler
+from rest_framework_simplejwt.exceptions import InvalidToken
 
 from exception.enums import AuthMessage
 from wallet.utils import response_fail
@@ -8,16 +9,14 @@ from rest_framework import status
 
 
 def custom_exception_handler(exc, context):
-    status_code = status.HTTP_400_BAD_REQUEST
-    data = {}
-    if isinstance(exc, AuthenticationFailed):
-        data = str(exc.detail[0])
-        status_code = exc.status_code
-    elif isinstance(exc, ValidationError):
-        data = str(exc.detail[0])
+
+    if isinstance(exc, InvalidToken):
+        data = 'Token is invalid or expired.'
         status_code = exc.status_code
     else:
-        return exception_handler(exc, context)
+        data = str(exc.detail[0]) if isinstance(exc.detail, (tuple, list,)) else str(exc.detail)
+        status_code = exc.status_code
+
     response = response_fail(data, status_code)
 
     return response
