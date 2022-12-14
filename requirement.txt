@@ -12,3 +12,6 @@ redis==3.5.3
 django-redis==5.2.0
 Faker==13.6.0
 factory-boy==3.2.1
+django-rest-swagger==2.2.0
+importlib-metadata==4.13.0
+drf-yasg==1.21.4

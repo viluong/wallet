@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'wallet.apps.WalletConfig',
     'exception.apps.ExceptionConfig',
+    'rest_framework_swagger',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -138,7 +140,8 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser'
     ],
-    'EXCEPTION_HANDLER': 'exception.views.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'exception.views.custom_exception_handler',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 # Static files (CSS, JavaScript, Images)
